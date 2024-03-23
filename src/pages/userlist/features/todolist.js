@@ -3,6 +3,7 @@ import { LuEye } from "react-icons/lu";
 import UserDetails from '../../../component/userdetailsModal';
 import { CiSearch } from "react-icons/ci";
 import { ImFileEmpty } from "react-icons/im";
+import useApi from '../../../hooks/userdetailsApi';
 
 const TodoList = () => {
 
@@ -11,24 +12,13 @@ const TodoList = () => {
     const [open, setOpen] = useState(false);
     const [page, setPage] = useState(1);
     const [id, setId] = useState(null);
+    const { data, loading, error } = useApi(`https://jsonplaceholder.typicode.com/users`);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`https://jsonplaceholder.typicode.com/users?_page=${page}&_limit=10`);
-                const data = await response.json();
-                console.log('data: ', data);
-                setUserData(data)
-            } catch (error) {
-                console.log('error: ', error);
-            }
-        }
-
         if (searchData.length === 0) {
-            fetchData();
+            setUserData(data)
         }
-
-    }, [searchData, page])
+    }, [searchData, data])
 
     const openUserDetails = (id) => {
         console.log('id: ', id);
@@ -43,7 +33,6 @@ const TodoList = () => {
     const search = () => {
         const filteredData = userData.filter(user => user.name.toLowerCase().includes(searchData.toLowerCase()));
         setUserData(filteredData);
-
     }
 
     return (
