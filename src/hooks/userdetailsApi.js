@@ -19,6 +19,7 @@ const useApi = (url) => {
                 }
             } catch (error) {
                 setError(error);
+            } finally {
                 setLoading(false);
             }
         };
