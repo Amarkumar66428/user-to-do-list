@@ -35,6 +35,23 @@ const TodoList = () => {
         setUserData(filteredData);
     }
 
+    const handleSort = (type) => {
+        switch (type) {
+            case "az":
+                setUserData([...userData].sort((a, b) => a.name.localeCompare(b.name)));
+                break;
+            case "za":
+                setUserData([...userData].sort((a, b) => b.name.localeCompare(a.name)));
+                break;
+            default:
+                setUserData([...userData].sort((a, b) => a.name.localeCompare(b.name)));
+                break;
+        }
+
+    }
+
+
+
     return (
         <section>
             {loading ? <div className="loader">
@@ -49,6 +66,20 @@ const TodoList = () => {
                                     <button className="searchButton" onClick={search}>
                                         <CiSearch size={24} />
                                     </button>
+                                </div>
+                                <div class="select">
+                                    <p>Sort by</p>
+                                    <label class="radio-button">
+                                        <input type="radio" name="example-radio" value="option1" onClick={() => handleSort("az")} />
+                                        <span class="radio"></span>
+                                        A - Z
+                                    </label>
+
+                                    <label class="radio-button">
+                                        <input type="radio" name="example-radio" value="option2" onClick={() => handleSort("za")} />
+                                        <span class="radio"></span>
+                                        Z - A
+                                    </label>
                                 </div>
                             </div>
                         </div>
